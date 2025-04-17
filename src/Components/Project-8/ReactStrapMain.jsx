@@ -3,11 +3,11 @@ import { Input, Table } from "reactstrap";
 
 const ReactStrapMain = () => {
   const [data, setData] = useState([
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
+    ["", "", "", "", ""],
   ]);
   const dummyData = [
     {
@@ -43,13 +43,17 @@ const ReactStrapMain = () => {
     combinedData = dummyData.map((row, index) => {
       const { Column4, Column5, Column6 } = row;
       const additionalColumns = data[index] || ["", "", ""];
-
+      console.log(additionalColumns);
       return [...additionalColumns, Column4, Column5, Column6];
     });
   } else {
     combinedData = data.map((row, index) => {
       const additionalColumns = dummyData[index] || {};
+      console.log(additionalColumns);
       return [
+        additionalColumns.Column4 || "",
+        additionalColumns.Column5 || "",
+        additionalColumns.Column6 || "",
         ...row,
         additionalColumns.Column4 || "",
         additionalColumns.Column5 || "",
@@ -58,22 +62,35 @@ const ReactStrapMain = () => {
     });
   }
 
+  // combinedData = data.map((row, index) => {
+  //   const additionalColumns = dummyData[index] || {};
+  //   console.log(additionalColumns);
+  //   return [
+  //     ...row,
+  //     additionalColumns.Column4 || "",
+  //     additionalColumns.Column5 || "",
+  //     additionalColumns.Column6 || "",
+  //   ];
+  // });
+
+  console.log(combinedData);
   const handlePaste = (e) => {
     e.preventDefault();
+    console.log(combinedData);
     const clipBoardData = e.clipboardData.getData("text");
-
+    console.log(clipBoardData);
     const rowData = clipBoardData
       .split("\n")
       .filter((val) => val.trim() !== "")
       .map((val) => val.trim());
     const newData = rowData.map((val) => val.split("\t"));
-
+    newData.map((val) => console.log(val));
     if (newData.length > combinedData.length) {
       alert("The copied data is greater than the table data");
       return;
     }
 
-    newData[0].length === 3
+    newData[0].length === 5
       ? setData(newData)
       : alert("The pasted is not in correct format");
   };
@@ -87,6 +104,8 @@ const ReactStrapMain = () => {
             <th>First Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Date</th>
+            <th>Phone No</th>
             <th>Emplyee No</th>
             <th>Mobile No</th>
             <th>Address</th>
@@ -98,9 +117,9 @@ const ReactStrapMain = () => {
               <tr key={rowIndex}>
                 <td>{rowIndex + 1}</td>
                 {row.map((val, index) => {
-                  return index <= 2 ? (
+                  return index <= 4 ? (
                     <td key={index}>
-                      <input value={val} type="text" onPaste={handlePaste} />
+                      <Input value={val} type="text" onPaste={handlePaste} />
                     </td>
                   ) : (
                     <td key={index}>{val}</td>

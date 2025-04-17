@@ -187,6 +187,81 @@ const Home = () => {
               </p>
             </div>
           </Link>
+          <Link to="/project-13">
+            <div className=" bg-gray-200 w-[300px] h-[330px] rounded-lg px-3 pt-2 pb-3 shadow-md">
+              <p className=" text-xl font-bold text-center text-black py-2">
+                Task 13
+              </p>
+              <p className=" text-md font-medium text-black pb-2">
+                Issue Document
+              </p>
+              <p className=" text-md text-gray-600">
+                Chat.js is a lightweight JavaScript library for building
+                interactive, real-time chat interfaces in web applications,
+                designed for simplicity and modern front-end integration.
+              </p>
+            </div>
+          </Link>
+          <Link to="/project-14">
+            <div className=" bg-gray-200 w-[300px] h-[330px] rounded-lg px-3 pt-2 pb-3 shadow-md">
+              <p className=" text-xl font-bold text-center text-black py-2">
+                Task 14
+              </p>
+              <p className=" text-md font-medium text-black pb-2">
+                QC Document
+              </p>
+              <p className=" text-md text-gray-600">
+                Chat.js is a lightweight JavaScript library for building
+                interactive, real-time chat interfaces in web applications,
+                designed for simplicity and modern front-end integration.
+              </p>
+            </div>
+          </Link>
+          <Link to="/project-15">
+            <div className=" bg-gray-200 w-[300px] h-[330px] rounded-lg px-3 pt-2 pb-3 shadow-md">
+              <p className=" text-xl font-bold text-center text-black py-2">
+                Task 15
+              </p>
+              <p className=" text-md font-medium text-black pb-2">
+                Assign Roles
+              </p>
+              <p className=" text-md text-gray-600">
+                Chat.js is a lightweight JavaScript library for building
+                interactive, real-time chat interfaces in web applications,
+                designed for simplicity and modern front-end integration.
+              </p>
+            </div>
+          </Link>
+          <Link to="/project-16">
+            <div className=" bg-gray-200 w-[300px] h-[330px] rounded-lg px-3 pt-2 pb-3 shadow-md">
+              <p className=" text-xl font-bold text-center text-black py-2">
+                Task 16
+              </p>
+              <p className=" text-md font-medium text-black pb-2">
+                Laboratory Report
+              </p>
+              <p className=" text-md text-gray-600">
+                Chat.js is a lightweight JavaScript library for building
+                interactive, real-time chat interfaces in web applications,
+                designed for simplicity and modern front-end integration.
+              </p>
+            </div>
+          </Link>
+          <Link to="/project-17">
+            <div className=" bg-gray-200 w-[300px] h-[330px] rounded-lg px-3 pt-2 pb-3 shadow-md">
+              <p className=" text-xl font-bold text-center text-black py-2">
+                Task 17
+              </p>
+              <p className=" text-md font-medium text-black pb-2">
+                Laboratory Report
+              </p>
+              <p className=" text-md text-gray-600">
+                Chat.js is a lightweight JavaScript library for building
+                interactive, real-time chat interfaces in web applications,
+                designed for simplicity and modern front-end integration.
+              </p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

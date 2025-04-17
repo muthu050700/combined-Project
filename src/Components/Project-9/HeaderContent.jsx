@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import GinTable from "./GinTable";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { Table } from "reactstrap";
 import html2canvas from "html2canvas";
 import { PDFDocument } from "pdf-lib";
-import "jspdf-autotable";
+// import "jspdf-autotable";
 
 const HeaderContent = () => {
+  const tableRef = useRef(null);
   const componentRef = useRef(null);
   const [tableWidth, setTableWidth] = useState(0);
   const tableData = [
@@ -121,18 +121,72 @@ const HeaderContent = () => {
     link.download = "output-top.pdf";
     link.click();
   };
+  useEffect(() => {
+    const calculateTableWidth = () => {
+      if (tableRef.current) {
+        let totalWidth = 0;
+        const columnWidths = tableRef.current.querySelectorAll("th");
+        columnWidths.forEach((column) => {
+          totalWidth += column.offsetWidth; // Add the width of each column
+        });
 
+        setTableWidth(totalWidth);
+      }
+    };
+
+    calculateTableWidth(); // Calculate on mount
+
+    // Optionally, recalculate on window resize
+    window.addEventListener("resize", calculateTableWidth);
+    return () => window.removeEventListener("resize", calculateTableWidth);
+  }, []);
+
+  const TotalGinQty = tableData.reduce((sum, val) => sum + val.GinQty, 0);
+  const TotalQC = tableData.reduce((sum, val) => sum + val.QC, 0);
+  const TotalLabQty = tableData.reduce((sum, val) => sum + val.LabQty, 0);
   return (
     <div>
+      <div className=" flex justify-end my-3 mx-2">
+        <ReactHTMLTableToExcel
+          id="test-table-xls-button"
+          className="download-table-xls-button"
+          table="table-to-xls"
+          filename="tablexls"
+          sheet="tablexls"
+          buttonText="Download as XLS"
+          excelStyle={{
+            worksheet: {
+              pageSetup: { orientation: "landscape" }, // Set landscape orientation
+            },
+          }}
+        />
+        <button
+          className=" bg-gray-700 px-2 py-1 rounded-sm"
+          onClick={handlePDF}
+        >
+          Download has PDF
+        </button>
+      </div>
       <div ref={componentRef} style={{ width: `${tableWidth}px` }}>
-        <Table id="table-to-xls" className="custom-table table ">
+        <Table
+          id="table-to-xls"
+          style={{ border: "0.6px solid gray", borderCollapse: "collapse" }}
+        >
           <thead>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th colSpan="13" className="content-bold-heading pdf-container">
                 GIN DOCUMENT
               </th>
             </tr>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th
                 colSpan="3"
                 style={{
@@ -184,7 +238,11 @@ const HeaderContent = () => {
                 </span>
               </th>
             </tr>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th
                 colSpan="3"
                 style={{
@@ -216,7 +274,7 @@ const HeaderContent = () => {
                 </span>
               </th>
               <th
-                colSpan="4"
+                colSpan="5"
                 style={{
                   textAlign: "left",
                 }}
@@ -231,7 +289,11 @@ const HeaderContent = () => {
                 </span>
               </th>
             </tr>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th
                 colSpan={13}
                 style={{
@@ -263,7 +325,11 @@ const HeaderContent = () => {
                 </span>
               </th>
             </tr>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th
                 colSpan={13}
                 style={{
@@ -315,7 +381,11 @@ const HeaderContent = () => {
                 ></span>
               </th>
             </tr>
-            <tr>
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
               <th
                 colSpan={13}
                 className="content-bold"
@@ -334,36 +404,125 @@ const HeaderContent = () => {
                 </span>{" "}
               </th>
             </tr>
-            <tr>
-              <th colSpan={13} className="content-bold">
+            <tr
+              style={{
+                border: "0.6px solid gray",
+              }}
+            >
+              <th
+                colSpan={13}
+                style={{
+                  textAlign: "left",
+                  paddingBottom: "40px",
+                }}
+                className="content-bold"
+              >
                 Remarks :
               </th>
             </tr>
             <tr>
               <th colSpan={13} className="p-0">
-                <GinTable setTableWidth={setTableWidth} />
+                <div ref={tableRef}>
+                  <Table
+                    bordered
+                    className="m-0 table "
+                    style={{
+                      border: "0.6px solid gray",
+                      borderCollapse: "collapse",
+                    }}
+                  >
+                    <thead>
+                      <tr
+                        className="text-[14px] gin-table"
+                        style={{ backgroundColor: "blue" }}
+                      >
+                        <th>PoNo</th>
+                        <th>Buyer Div</th>
+                        <th>Style / Order No</th>
+                        <th>Item Code</th>
+                        <th>Color</th>
+                        <th>Size</th>
+                        <th>Item Description</th>
+                        <th>Uom</th>
+                        <th>GinQty</th>
+                        <th>CV</th>
+                        <th>Unchecked</th>
+                        <th>QC</th>
+                        <th>Lab Qty</th>
+                        <th>CV</th>
+                        <th>Unchecked</th>
+                        <th>QC</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tableData.map((val) => {
+                        return (
+                          <tr
+                            className=" text-[12px]"
+                            style={{
+                              fontWeight: "normal",
+                              padding: "4px",
+                              textAlign: "left",
+                              border: "0.6px solid gray",
+                            }}
+                          >
+                            <th scope="row">{val.PoNo}</th>
+                            <td>{val.BuyerDiv}</td>
+                            <td>{val.StyleOrderNo}</td>
+                            <td>{val.ItemCode}</td>
+                            <td>{val.Color}</td>
+                            <td>{val.Size}</td>
+                            <td>{val.ItemDescription}</td>
+                            <td>{val.Uom}</td>
+                            <td>{val.GinQty}</td>
+                            <td>{val.CV}</td>
+                            <td>{val.Unchecked}</td>
+                            <td>{val.QC}</td>
+                            <td>{val.LabQty}</td>
+                          </tr>
+                        );
+                      })}
+                      <tr
+                        style={{
+                          border: "0.6px solid gray",
+                        }}
+                      >
+                        <td
+                          colSpan={8}
+                          className="text-[12px]"
+                          style={{ fontWeight: "medium" }}
+                        >
+                          Total:{" "}
+                        </td>
+                        <td
+                          className=" text-[12px]"
+                          style={{ fontWeight: "medium" }}
+                        >
+                          {TotalGinQty}
+                        </td>
+                        <td>{""}</td>
+                        <td>{""}</td>
+                        <td
+                          className="text-[12px]"
+                          style={{ fontWeight: "medium" }}
+                        >
+                          {TotalQC}
+                        </td>
+                        <td
+                          className="text-[12px]"
+                          style={{ fontWeight: "medium" }}
+                        >
+                          {TotalLabQty}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </div>
               </th>
             </tr>
           </thead>
         </Table>
       </div>
-
-      <ReactHTMLTableToExcel
-        id="test-table-xls-button"
-        className="download-table-xls-button"
-        table="table-to-xls"
-        filename="tablexls"
-        sheet="tablexls"
-        buttonText="Download as XLS"
-        excelStyle={{
-          worksheet: {
-            pageSetup: { orientation: "landscape" }, // Set landscape orientation
-          },
-        }}
-      />
-      <button className=" bg-gray-700 px-2 py-1 rounded-sm" onClick={handlePDF}>
-        Download has PDF
-      </button>
     </div>
   );
 };

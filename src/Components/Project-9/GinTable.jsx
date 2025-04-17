@@ -48,7 +48,11 @@ const GinTable = ({ setTableWidth }) => {
   const TotalLabQty = tableData.reduce((sum, val) => sum + val.LabQty, 0);
   return (
     <div ref={tableRef}>
-      <Table bordered className="m-0 table ">
+      <Table
+        bordered
+        className="m-0 table "
+        style={{ border: "0.6px solid gray", borderCollapse: "collapse" }}
+      >
         <thead>
           <tr
             className="text-[14px] gin-table"
@@ -81,6 +85,7 @@ const GinTable = ({ setTableWidth }) => {
                   fontWeight: "normal",
                   padding: "4px",
                   textAlign: "left",
+                  border: "0.6px solid gray",
                 }}
               >
                 <th scope="row">{val.PoNo}</th>
@@ -99,7 +104,11 @@ const GinTable = ({ setTableWidth }) => {
               </tr>
             );
           })}
-          <tr>
+          <tr
+            style={{
+              border: "0.6px solid gray",
+            }}
+          >
             <td
               colSpan={8}
               className="text-[12px]"

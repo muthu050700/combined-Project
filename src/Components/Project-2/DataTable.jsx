@@ -17,6 +17,7 @@ const DataTable = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedIds, setSelectIds] = useState([]);
+  console.log(selectedIds, selectAll);
   useEffect(() => {
     fetchApi();
   }, [limit, currentPage]);

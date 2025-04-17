@@ -27,7 +27,14 @@ import ReactStrapMain from "./Components/Project-8/reactStrapMain";
 import GinDocument from "./Components/Project-9/GinDocument";
 import BarCode from "./Components/Project-10/BarCode";
 import Rake from "./Components/Project-11/Rake";
+import IssueDocument from "./Components/Project-12/IssueDocument";
+import QcMain from "./Components/Project-13/QcMain";
+import QcSummery from "./Components/Project-13/QcSummery";
+import QcDetail from "./Components/Project-13/QcDetail";
+import AssignRoles from "./Components/Project-14/AssignRoles";
+import LaboratoryReport from "./Components/Project-15/LaboratoryReport";
 
+import DatePicker from "./Components/Project-16/DatePicker";
 function App() {
   return (
     <>
@@ -57,6 +64,13 @@ function App() {
                 <Route path="/project-10" element={<GinDocument />} />
                 <Route path="/project-11" element={<BarCode />} />
                 <Route path="/project-12" element={<Rake />} />
+                <Route path="/project-13" element={<IssueDocument />} />
+                <Route path="/project-14" element={<QcMain />} />{" "}
+                <Route path="/project-15" element={<AssignRoles />} />{" "}
+                <Route path="/qc_summery" element={<QcSummery />} />
+                <Route path="/qc_detail" element={<QcDetail />} />
+                <Route path="/project-16" element={<LaboratoryReport />} />{" "}
+                <Route path="/project-17" element={<DatePicker />} />{" "}
               </Routes>
               <Provider store={store1}>
                 <Routes>
